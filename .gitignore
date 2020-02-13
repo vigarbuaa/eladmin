@@ -3,3 +3,7 @@
 *.iml
 */target/*
 */*.iml
+.project
+*.gitignore
+.classpath
+*.prefs
