@@ -1,6 +1,8 @@
 package me.zhengjie.modules.todo.rest;
 
+import me.zhengjie.annotation.AnonymousAccess;
 import me.zhengjie.aop.log.Log;
+import me.zhengjie.modules.todo.domain.CompletedVo;
 import me.zhengjie.modules.todo.domain.Todo;
 import me.zhengjie.modules.todo.service.TodoService;
 import me.zhengjie.modules.todo.service.dto.TodoQueryCriteria;
@@ -65,9 +67,18 @@ public class TodoController {
     @Log("删除待办事宜")
     @ApiOperation("删除待办事宜")
     @PreAuthorize("@el.check('todo:del')")
-    @DeleteMapping
+    @PostMapping("/del")
     public ResponseEntity<Object> deleteAll(@RequestBody Integer[] ids) {
         todoService.deleteAll(ids);
         return new ResponseEntity<>(HttpStatus.OK);
+    }
+    
+    @PutMapping("/udpateStatus")
+    @Log("更新待办事宜状态")
+    @ApiOperation("修改待办事宜")
+    @PreAuthorize("@el.check('todo:edit')")
+    public ResponseEntity<Object> update(@Validated @RequestBody CompletedVo vo){
+        todoService.updateStatus(vo.getCompleted(), vo.getId());
+        return new ResponseEntity<>(HttpStatus.NO_CONTENT);
     }
 }

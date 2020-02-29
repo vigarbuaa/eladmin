@@ -63,4 +63,10 @@ public interface TodoService {
     * @throws IOException /
     */
     void download(List<TodoDto> all, HttpServletResponse response) throws IOException;
+
+    /**
+    * 更新完成状态
+    * @param completed,id /
+    */
+    void updateStatus(Integer completed, Integer id);
 }

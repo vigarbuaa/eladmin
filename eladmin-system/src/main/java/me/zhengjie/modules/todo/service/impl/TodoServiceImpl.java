@@ -22,8 +22,11 @@ import me.zhengjie.utils.QueryHelp;
 import java.util.List;
 import java.util.Map;
 import java.io.IOException;
+import java.sql.Timestamp;
+
 import javax.servlet.http.HttpServletResponse;
 import java.util.ArrayList;
+import java.util.Date;
 import java.util.LinkedHashMap;
 
 /**
@@ -69,6 +72,15 @@ public class TodoServiceImpl implements TodoService {
     //@CacheEvict(allEntries = true)
     @Transactional(rollbackFor = Exception.class)
     public TodoDto create(Todo resources) {
+    	if (null==resources.getCompleted()){
+    		resources.setCompleted(0);
+    	}
+    	if(null==resources.getCreateDate()){
+    		resources.setCreateDate(new Timestamp(new Date().getTime()));
+    	}
+    	if(null==resources.getDelFlag()){
+    		resources.setDelFlag(0);
+    	}
         return todoMapper.toDto(todoRepository.save(resources));
     }
 
@@ -105,4 +117,10 @@ public class TodoServiceImpl implements TodoService {
         }
         FileUtil.downloadExcel(list, response);
     }
+
+	@Override
+	public void updateStatus(Integer completed, Integer id) {
+		System.out.println("come to update Stauts: " + completed + "--" + id);
+		todoRepository.updateState(completed, id);
+	}
 }
