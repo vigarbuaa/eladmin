@@ -214,6 +214,8 @@ public class RedisUtils {
             }
             return true;
         } catch (Exception e) {
+        	System.out.println("redis set exception!");
+        	System.out.println(e.getStackTrace());
             e.printStackTrace();
             return false;
         }

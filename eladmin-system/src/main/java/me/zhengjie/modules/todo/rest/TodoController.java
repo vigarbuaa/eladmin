@@ -44,7 +44,8 @@ public class TodoController {
     @ApiOperation("查询待办事宜")
     @PreAuthorize("@el.check('todo:list')")
     public ResponseEntity<Object> getTodos(TodoQueryCriteria criteria, Pageable pageable){
-        return new ResponseEntity<>(todoService.queryAll(criteria,pageable),HttpStatus.OK);
+//        return new ResponseEntity<>(todoService.queryAll(criteria,pageable),HttpStatus.OK);
+      return new ResponseEntity<>(todoService.queryAll(criteria),HttpStatus.OK);
     }
 
     @PostMapping
